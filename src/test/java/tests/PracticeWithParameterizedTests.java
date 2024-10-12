@@ -55,15 +55,15 @@ public class PracticeWithParameterizedTests extends TestBase {
                         new Email("David@Shwimmer.com"),
                         Genders.MALE,
                         new Phone("1234567890"),
-                        new DateOfBirth(LocalDate.of(1990, 5, 15)),
-
+                        new DateOfBirth(LocalDate.of(1990, 5, 15))
+                ),
 
                 Arguments.of(
                         new Person("Rachel", "Green"),
                         new Email("Rachel@Green.com"),
                         Genders.FEMALE,
                         new Phone("0987654321"),
-                        new DateOfBirth(LocalDate.of(1985, 10, 20)
+                        new DateOfBirth(LocalDate.of(1985, 10, 20))
                 ),
 
                 Arguments.of(
@@ -71,12 +71,12 @@ public class PracticeWithParameterizedTests extends TestBase {
                         new Email("Snoopy@Dog.com"),
                         Genders.OTHER,
                         new Phone("6789054321"),
-                        new DateOfBirth(LocalDate.of(2000, 3, 25)
+                        new DateOfBirth(LocalDate.of(2000, 3, 25))
                 )
-        ),
+        );
     }
 
-    @MethodSource
+    @MethodSource("successRegistrationWithMaxValueTest")
     @ParameterizedTest(name = "Проверка формы регистрации с максимальными данными")
     public void successRegistrationWithMaxValueTest(Person person, Email emailAddress, Genders genders, Phone phone, DateOfBirth dateOfBirth){
         $("#firstName").setValue(person.getFirstName());
