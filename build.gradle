@@ -1,15 +1,15 @@
 plugins {
-    id 'java-library' // используется ЯП java
+    id 'java-library'
 }
 
 repositories {
-    mavenCentral()  // используется сторонняя библиотека mavenCentral()
+    mavenCentral()
 }
 
 dependencies {
     testImplementation(
-            "com.codeborne:selenide:7.4.3",       // используется библиотека selenide из библиотеки mavenCentral()
-            "org.junit.jupiter:junit-jupiter:5.10.0",   // библиотека junit
+            "com.codeborne:selenide:7.4.3",
+            "org.junit.jupiter:junit-jupiter:5.10.0",
             'org.slf4j:slf4j-simple:2.0.7',   // Логгер для более подробного лога
             'com.github.javafaker:javafaker:1.0.2'
     )
