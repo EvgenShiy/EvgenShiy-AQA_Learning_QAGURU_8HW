@@ -3,13 +3,13 @@ package data;
 public enum Genders {
     MALE("Male"), FEMALE("Female"), OTHER("Other");
 
-    public final String description;
+    public final String descriptionGenders;
 
-    Genders(String description) {
-        this.description = description;
+    Genders(String descriptionGenders) {
+        this.descriptionGenders = descriptionGenders;
     }
 
-    public String getDescription() {
-        return description;
+    public String getDescriptionGenders() {
+        return descriptionGenders;
     }
 }

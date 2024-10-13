@@ -7,11 +7,16 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.openqa.selenium.By;
+import pages.components.CalendarComponent;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.stream.Stream;
 
 import static com.codeborne.selenide.Condition.text;
+import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.*;
 import static com.codeborne.selenide.Selenide.$;
@@ -55,7 +60,12 @@ public class PracticeWithParameterizedTests extends TestBase {
                         new Email("David@Shwimmer.com"),
                         Genders.MALE,
                         new Phone("1234567890"),
-                        new DateOfBirth(LocalDate.of(1990, 5, 15))
+                        "15",
+                        "June",
+                        "2012",
+                        List.of("Civics", "Biology", "Hindi", "English", "Maths", "Chemistry"),
+                        Hobbies.SPORTS,
+                        new Foto("testfile.png")
                 ),
 
                 Arguments.of(
@@ -63,7 +73,12 @@ public class PracticeWithParameterizedTests extends TestBase {
                         new Email("Rachel@Green.com"),
                         Genders.FEMALE,
                         new Phone("0987654321"),
-                        new DateOfBirth(LocalDate.of(1985, 10, 20))
+                        "25",
+                        "January",
+                        "1977",
+                        List.of("Physics", "Economics", "Computer Science", "Commerce"),
+                        Hobbies.READING,
+                        new Foto("testfile2.png")
                 ),
 
                 Arguments.of(
@@ -71,29 +86,34 @@ public class PracticeWithParameterizedTests extends TestBase {
                         new Email("Snoopy@Dog.com"),
                         Genders.OTHER,
                         new Phone("6789054321"),
-                        new DateOfBirth(LocalDate.of(2000, 3, 25))
+                        "14",
+                        "March",
+                        "1995",
+                        List.of("Social Studies", "Arts", "Accounting", "History"),
+                        Hobbies.MUSIC,
+                        new Foto("testfile3.png")
                 )
         );
     }
 
     @MethodSource("successRegistrationWithMaxValueTest")
-    @ParameterizedTest(name = "Проверка формы регистрации с максимальными данными")
-    public void successRegistrationWithMaxValueTest(Person person, Email emailAddress, Genders genders, Phone phone, DateOfBirth dateOfBirth){
+    @ParameterizedTest(name = "Проверка формы регистрации с максимальными данными для {2}")
+    public void successRegistrationWithMaxValueTest(Person person, Email emailAddress, Genders genders, Phone phone, String day, String month, String year, List<String> subjects, Hobbies hobbies, Foto foto){
         $("#firstName").setValue(person.getFirstName());
         $("#lastName").setValue(person.getLastName());
         $("#userEmail").setValue(emailAddress.getEmailAddress());
-        $("#genterWrapper").$(byText(genders.getDescription())).click();
+        $("#genterWrapper").$(byText(genders.getDescriptionGenders())).click();
         $("#userNumber").setValue(phone.getPhone());
 
-        $("#dateOfBirthInput").click();
-        $(".react-datepicker__year-select").$(byText(dateOfBirth.getYear())).click();
-        $(".react-datepicker__month-select").$(byText(dateOfBirth.getMonth())).click();
-        $(".react-datepicker__day--0" + dateOfBirth.getDay() + ":not(.react-datepicker__day--outside-month)").click();
+        CalendarComponent calendarComponent = new CalendarComponent();
+        calendarComponent.setDate(day, month, year);
 
-//        $("#subjectsInput").setValue("Math").pressEnter();
-//        $("label[for='hobbies-checkbox-1']").click();
-//        $("#uploadPicture").uploadFromClasspath("testfile.png");
-//        $("#currentAddress").setValue("1234 Main St, Springfield");
+        for (String subject : subjects) {
+            $("#subjectsInput").setValue(subject).pressEnter();
+        }
+        $("#hobbiesWrapper").$(byText(hobbies.getDescriptionHobbies())).click();
+        $("#uploadPicture").uploadFromClasspath(foto.getFileName());
+        $("#currentAddress").setValue("1234 Main St, Springfield");
 //        $("#react-select-3-input").setValue("NCR").pressEnter();
 //        $("#react-select-4-input").setValue("Delhi").pressEnter();
 //        $("#submit").click();
